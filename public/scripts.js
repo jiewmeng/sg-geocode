@@ -5,7 +5,7 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 	let postalCodes = document.getElementById('postalCodes').value.trim().split('\n').map(v => v.trim());
 
 	let obj = {};
-	let geocoder = google.maps.Geocoder;
+	let geocoder = new google.maps.Geocoder();
 	Promise.map(postalCodes, (code) => {
 		return new Promise(function(resolve, reject) {
 			if (!code) return resolve({lat: 'NA', lng: 'NA'})
@@ -17,7 +17,10 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 				let result = results.find(res => res && res.geometry && res.geometry.location); 
 
 				setTimeout(() => {
-					resolve(result ? result.geometry.location : {lat: '?', lng: `"${code}"`});	
+					resolve(result ? {
+						lat: result.geometry.location.lat(),
+						lng: result.geometry.location.lng(),
+					} : {lat: '?', lng: `"${code}"`});	
 				}, 500);
 			});
 
