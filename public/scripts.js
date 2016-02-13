@@ -1,10 +1,14 @@
 'use strict'
 
 document.getElementById('frmSearch').addEventListener('submit', function(e) {
+	let tblBody = document.getElementById('tblResultsBody');
+	tblBody.innerHTML = ''
 	e.preventDefault();
 	let postalCodes = document.getElementById('postalCodes').value.trim().split('\n').map(v => v.trim());
 
 	let obj = {};
+	let numCodes = postalCodes.length;
+	let done = 0;
 	let geocoder = new google.maps.Geocoder();
 	Promise.map(postalCodes, (code) => {
 		return new Promise(function(resolve, reject) {
@@ -20,27 +24,21 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 					resolve(result ? {
 						lat: result.geometry.location.lat(),
 						lng: result.geometry.location.lng(),
-					} : {lat: '?', lng: `"${code}"`});	
-				}, 1000);
+					} : {lat: '?', lng: `?`});	
+				}, 2000);
 			});
+		}).then((coords) => {
+			let html = '';
+			html += `<tr>`;
+			html += `<td>${code}</td>`;
+			html += `<td>${coords.lat}</td>`;
+			html += `<td>${coords.lng}</td>`;
+			html += `</tr>`;
 
-		}).then(coords => obj[code] = coords)
-	}, {concurrency: 5})
-		.then(() => {
-			let htmlRows = postalCodes.map(code => {
-				let html = '';
-
-				html += `<tr>`;
-				html += `<td>${code}</td>`;
-				html += `<td>${obj[code].lat}</td>`;
-				html += `<td>${obj[code].lng}</td>`;
-				html += `</tr>`;
-
-				return html;
-			}).join('');
-
-			document.getElementById('tblResultsBody').innerHTML = htmlRows
-		})
+			tblBody.innerHTML += html;
+			done++;
+		}).then(() => document.getElementById('progress').MaterialProgress.setProgress((done*100)/numCodes))
+	}, {concurrency: 2})
 		.catch(err => console.error(err));
 
 	return false;
