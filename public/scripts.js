@@ -21,7 +21,7 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 						lat: result.geometry.location.lat(),
 						lng: result.geometry.location.lng(),
 					} : {lat: '?', lng: `"${code}"`});	
-				}, 500);
+				}, 1000);
 			});
 
 		}).then(coords => obj[code] = coords)
@@ -41,7 +41,7 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 
 			document.getElementById('tblResultsBody').innerHTML = htmlRows
 		})
-		.catch(console.error);
+		.catch(err => console.error(err));
 
 	return false;
 });
