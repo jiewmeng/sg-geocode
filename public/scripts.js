@@ -10,7 +10,7 @@ document.getElementById('frmSearch').addEventListener('submit', function(e) {
 		return new Promise(function(resolve, reject) {
 			if (!code) return resolve({lat: 'NA', lng: 'NA'})
 
-			geocoder.geocode({ address: `Singapore ${code}`, function(results, status) {
+			geocoder.geocode({ address: `Singapore ${code}` }, function(results, status) {
 				if (status !== google.maps.GeocoderStatus.OK) return reject(status);
 
 				console.log(results)
