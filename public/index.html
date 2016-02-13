@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geocode Singapore Postal Code</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.indigo-pink.min.css" />
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-drawer-button">
+	<header class="mdl-layout__header">
+		<div class="mdl-layout__header-row">
+			<span class="mdl-layout-title">Geocode Singapore Postal Code</span>
+		</div>
+	</header>
+
+	<div class="mdl-layout__content	">
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--3-col">
+				<form id="frmSearch" action="#">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<label class="mdl-textfield__label" for="postalCodes">Postal codes</label>
+						<textarea class="mdl-textfield__input" rows="20" name="postalCodes" id="postalCodes"></textarea>
+					</div>
+
+					<input type="submit" value="Geocode" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
+				</form>
+			</div>
+			<div class="mdl-cell mdl-cell--9-col">
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+					<thead>
+						<tr>
+							<th>Postal code</th>
+							<th>Lat</th>
+							<th>Lng</th>
+						</tr>
+					</thead>
+					<tbody id="tblResultsBody">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+	<script src="https://code.getmdl.io/1.1.1/material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.0/bluebird.min.js"></script>
+	<script src="scripts.js"></script>
+</body>
+</html>
